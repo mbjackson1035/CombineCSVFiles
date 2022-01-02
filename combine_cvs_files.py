@@ -44,6 +44,11 @@ if len(filepaths)==0:
 text_file = open(filepaths[1], "r")
 header=chomp(text_file.readline())
 
+print ("\n-------------------------------------------------")
+print ("Obtaining header from file "+filepaths[1])
+print ("Header='"+header+"'")  # Note: No CRLF on purpose
+print ("-------------------------------------------------")
+
 if len(header)==0:
     print("\n*** Critical Error: No data in header file '{0}' ***\n".format(filepaths[1]))
     sys.exit(1)
@@ -59,10 +64,6 @@ with open(output_filename, "wb") as outfile:
         first_file_read=True
 
     outfile.write(header.encode("UTF-8"))
-    print ("\n-------------------------------------------------")
-    print ("Obtaining header from file "+filepaths[1])
-    print ("Header='"+header+"'")  # Note: No CRLF on purpose
-    print ("-------------------------------------------------")
 
     for fname in filepaths:  
 
