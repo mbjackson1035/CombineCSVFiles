@@ -27,6 +27,7 @@ output_filename = config['files']['output_filename']
 
 warning_count=0
 warning_dictionary={}
+start_dir=os.getcwd()
 
 print ("\n=================================================")
 print("Processing the following files in '", input_directory_path, "' :")
@@ -42,7 +43,14 @@ if len(filepaths)==0:
 text_file = open(filepaths[1], "r")
 header=chomp(text_file.readline())
 
+os.chdir(start_dir)
+first_file_read=False
 with open(output_filename, "wb") as outfile:
+
+    if first_file_read==False:
+        # Work around so that if output is a relative path, it will be in placed in the current directory
+        os.chdir(input_directory_path)
+        first_file_read=True
 
     outfile.write(header.encode("UTF-8"))
     print ("\n-------------------------------------------------")
@@ -80,13 +88,10 @@ except:
 displayable_file_name=output_filename[startpos+1:]
 
 if len(warning_dictionary)==0:
-    print("\nFinished processing file '{0}' in {1:.3f} seconds with no issues".format(displayable_file_name,time.time() - start_time))
+    print("\nFinished processing file '{0}' in {1:.3f} seconds with no issues\n".format(displayable_file_name,time.time() - start_time))
 else:
     count_str=str(len(warning_dictionary))
     print("\nFinished processing file '{0}' in {1:.3f} seconds with {2} issues".format(displayable_file_name, time.time() - start_time, count_str))
     for key, value in warning_dictionary.items():
         print("    File '%s' %s" % (key, value))
-
-
-
-
+    print("")
