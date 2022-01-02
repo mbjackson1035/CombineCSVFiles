@@ -5,9 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
-Test/*.csv
-Test/*.txt
-Test/*.java
+Test/*.*
 combined.csv
 dev_ignore/
 ___junk/
