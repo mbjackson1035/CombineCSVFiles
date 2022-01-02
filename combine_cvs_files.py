@@ -37,7 +37,7 @@ filepaths = [f for f in os.listdir(".") if f.endswith('.csv')]
 print (filepaths)
 
 if len(filepaths)==0:
-    print("\n*** Error: There are no cvs files in directory '%s' ***\n" % input_directory_path)
+    print("\n*** Critical Error: There are no cvs files in directory '%s' ***\n" % input_directory_path)
     sys.exit(1)
 
 text_file = open(filepaths[1], "r")
@@ -58,6 +58,10 @@ with open(output_filename, "wb") as outfile:
     print ("Obtaining header from file "+filepaths[1])
     print ("Header='"+header+"'")  # Note: No CRLF on purpose
     print ("-------------------------------------------------")
+
+    if len(chomp(header))==0:
+        print("\n*** Critical Error: No data in header file '{0}' ***\n".format(filepaths[1]))
+        sys.exit(1)
 
     for fname in filepaths:  
 
