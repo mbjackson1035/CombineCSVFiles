@@ -1,6 +1,7 @@
 import sys
 import os
 import time
+import argparse
 import configparser
 from helper_functions import chomp, number_of_lines_in_file
 
@@ -43,6 +44,10 @@ if len(filepaths)==0:
 text_file = open(filepaths[1], "r")
 header=chomp(text_file.readline())
 
+if len(header)==0:
+    print("\n*** Critical Error: No data in header file '{0}' ***\n".format(filepaths[1]))
+    sys.exit(1)
+
 os.chdir(start_dir)
 first_file_read=False
 with open(output_filename, "wb") as outfile:
@@ -58,10 +63,6 @@ with open(output_filename, "wb") as outfile:
     print ("Obtaining header from file "+filepaths[1])
     print ("Header='"+header+"'")  # Note: No CRLF on purpose
     print ("-------------------------------------------------")
-
-    if len(chomp(header))==0:
-        print("\n*** Critical Error: No data in header file '{0}' ***\n".format(filepaths[1]))
-        sys.exit(1)
 
     for fname in filepaths:  
 
