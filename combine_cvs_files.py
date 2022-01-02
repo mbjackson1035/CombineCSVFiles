@@ -48,7 +48,8 @@ first_file_read=False
 with open(output_filename, "wb") as outfile:
 
     if first_file_read==False:
-        # Work around so that if output is a relative path, it will be in placed in the current directory
+        # Work around so that if the output file is in a relative path, it will be in not be placed relative 
+        # to the input directory by the earlier os.chdir(input_directory_path) call
         os.chdir(input_directory_path)
         first_file_read=True
 
