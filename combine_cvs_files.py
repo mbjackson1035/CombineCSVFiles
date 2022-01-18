@@ -28,7 +28,7 @@ output_filename = config['files']['output_filename']
 #output_filename = r"C:\Temp\combined.cvs"
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--no_header', type=str, required=False)
+parser.add_argument('--no_header', help="The CVS header requirement that the file row of the each file contains the header (default set to True)", type=str, required=False)
 args = parser.parse_args()
 bypass_header=False
 
