@@ -7,6 +7,7 @@ from helper_functions import chomp, number_of_lines_in_file
 
 '''
 Notes:
+   - Can bypass using headers on the commadline by using the --no_header=True argument
    - Assumes that the first non-empty CSV file read has the header
    - It skips CVS files that have less than 2 lines. Issues warning
    - It ignores non-CVS files (No warning)
@@ -26,6 +27,21 @@ output_filename = config['files']['output_filename']
 #input_directory_path = r"C:\Temp\Test"
 #output_filename = r"C:\Temp\combined.cvs"
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--no_header', type=str, required=False)
+args = parser.parse_args()
+bypass_header=False
+
+#Check the header. If True, set. All other cases, it is False
+bypass_header=False
+if args.no_header is not None:
+    if args.no_header == 'True':
+        bypass_header=True
+    else:
+        bypass_header=False
+else:
+    bypass_header=False
+
 warning_count=0
 warning_dictionary={}
 start_dir=os.getcwd()
@@ -42,16 +58,22 @@ if len(filepaths)==0:
     sys.exit(1)
 
 text_file = open(filepaths[1], "r")
-header=chomp(text_file.readline())
+header=""
 
-print ("\n-------------------------------------------------")
-print ("Obtaining header from file "+filepaths[1])
-print ("Header='"+header+"'")  # Note: No CRLF on purpose
-print ("-------------------------------------------------")
+if bypass_header==False:
+    header=chomp(text_file.readline())
 
-if len(header)==0:
-    print("\n*** Critical Error: No data in header file '{0}' ***\n".format(filepaths[1]))
-    sys.exit(1)
+    print ("\n-------------------------------------------------")
+    print ("Obtaining header from file "+filepaths[1])
+    print ("Header='"+header+"'")  # Note: No CRLF on purpose
+    print ("-------------------------------------------------")
+
+    if len(header)==0:
+        print("\n*** Critical Error: No data in header file '{0}' ***\n".format(filepaths[1]))
+        print("You can do one of following things to continue:")
+        print("  1. Fix the issue in the file")
+        print("  2. Use the --no_header=True option in the commandline to skip putting a header in the combined file\n")
+        sys.exit(1)
 
 os.chdir(start_dir)
 first_file_read=False
@@ -63,7 +85,10 @@ with open(output_filename, "wb") as outfile:
         os.chdir(input_directory_path)
         first_file_read=True
 
-    outfile.write(header.encode("UTF-8"))
+    if bypass_header==True:
+        print("Bypassing header in file due to passed --no_header argument")
+    else:
+        outfile.write(header.encode("UTF-8"))
 
     for fname in filepaths:  
 
