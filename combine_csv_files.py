@@ -65,10 +65,11 @@ if bypass_header==False:
     print ("-------------------------------------------------")
 
     if len(header)==0:
-        print("\n*** Critical Error: No data in header file '{0}' ***\n".format(filepaths[1]))
+        print("\n*** Critical Error: No data in first file processed: {0}' ***\n".format(filepaths[1]))
+        print("The first file processed is used to obtain the header.")
         print("You can do one of following things to continue:")
-        print("  1. Fix the issue in the file")
-        print("  2. Use the --no_header=True option in the commandline to skip putting a header in the combined file\n")
+        print("  1. Fix the issue in the file (or move/delete the file to continue)")
+        print("  2. Or use the --no_header=True option in the commandline to skip putting a header in the combined file\n")
         sys.exit(1)
 
 os.chdir(start_dir)
