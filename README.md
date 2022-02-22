@@ -13,8 +13,10 @@ Limitations
    these warnings before using the combined csv file.
 3. This program will not delete or move any files. It is left for some other post process to 
    move/delete the input files as well as what to do with the resulting combined csv file. 
-4. Running the program will overwrite the existing combined file. If this is unacceptable,
+4. Re-running the program will overwrite the existing combined file. If this is unacceptable,
    either have some other process check for this before this program is run, or modify the code.
+5. This programs does not report on non-csv files. They are just ignored. In the test data, several other
+   file types are included, including one misspelled cvs instead of csv. 
 
 --------------------
 First use suggestion
@@ -32,12 +34,13 @@ Step 2. Test the happy case:
     -Inspect the combined file to find that it handles special character sets  
 Step 3. Test both good and bad files:  
     -Copy all files from ./Test/all_files  
-    -Delete combined.csv created from 
+    -Delete combined.csv created from Step 2
     -Run (python combine_csv_files.py)
-    -File Defunct_5.csv has no header. If the first file has no header, the program will stop
-    -Delete Defunct_5.csv and rerun.
+    -File Defunct_5.csv has no header. If the first file processed has no header, the program will stop
+    -Delete or move Defunct_5.csv and rerun.
     -Notice the warnings and inspect the created csv file (combined.csv)
-    -Note only csv files are processed
+    -Note only csv files are processed. All other file types are ignored - including a file
+     misspelled as cvs.
 Step 4. Now run using your own files. Inside the config.ini file, change the values of the
     input directory (input_directory_path) and the combined file name (output_filename).
     
