@@ -10,6 +10,8 @@ Test/*.*
 dev_ignore/
 ___junk/
 ___old/
+**.DS_Store
+
 
 # user defined
 # Distribution / packaging
@@ -119,4 +121,3 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-.DS_Store
