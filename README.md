@@ -5,13 +5,19 @@ There is a requirement that the first row of each file should contain the header
 Note: The source directory for both the csv files -and- the combined output filename are configured in the config.ini file.
 
 --------------------
+Limitations  
+--------------------
+1. This program will not delete or move any files. It is left for some other post process to 
+   move/delete the input files as well as what to do with the resulting combined csv file. 
+2. Running the program will overwrite the existing combined file. If this is unacceptable,
+   either have some other process check for this before this program is run, or modify the code.
+
+--------------------
 First use suggestion
 --------------------
 Just dive right in and run the following test ccenarios without changing anything in the config.ini file.
 This project includes files for testing in the Test directory. 
 
-Note: This program will not delete or move any files. It is left for some other post process to 
-      move/delete the input files as well as what to do with the combined csv file. 
 Step 1. In the main directory, enter the following command: python combine_csv_files.py
     -This will error out because there are no files to process in the default Test directory  
     -Notice that no csv file was created  
@@ -22,6 +28,7 @@ Step 2. Test the happy case:
     -Inspect the combined file to find that it handles special character sets  
 Step 3. Test both good and bad files:  
     -Copy all files from ./Test/all_files  
+    -Delete combined.csv created from 
     -Run (python combine_csv_files.py)
     -Notice the warnings and inspect the created csv file (combined.csv)
     -Note only csv files are processed
